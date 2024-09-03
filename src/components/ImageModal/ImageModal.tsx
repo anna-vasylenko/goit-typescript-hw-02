@@ -1,6 +1,8 @@
 import Modal from "react-modal";
 import { GoHeart } from "react-icons/go";
 import s from "./ImageModal.module.css";
+import { ImageModalProps } from "./ImageModal.types";
+import React from "react";
 
 const customStyles = {
   overlay: {
@@ -24,7 +26,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const ImageModal = ({
+const ImageModal: React.FC<ImageModalProps> = ({
   isOpenModal,
   closeModal,
   description,

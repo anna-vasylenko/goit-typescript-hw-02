@@ -1,6 +1,14 @@
+import React from "react";
 import s from "./ImageCard.module.css";
+import { ImageCardProps } from "./ImageCard.types";
 
-const ImageCard = ({ description, likes, urls, user, handleOpenModal }) => {
+const ImageCard: React.FC<ImageCardProps> = ({
+  description,
+  likes,
+  urls,
+  user,
+  handleOpenModal,
+}) => {
   return (
     <div className={s.imageWrapper}>
       <img

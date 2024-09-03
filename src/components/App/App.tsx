@@ -1,22 +1,35 @@
-import { useEffect, useState } from "react";
-import { fetchImages } from "./services/api";
-import SearchBar from "./components/SearchBar/SearchBar";
-import ImageGallery from "./components/ImageGallery/ImageGallery";
-import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
-import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
-import ImageModal from "./components/ImageModal/ImageModal";
-import Loader from "./components/Loader/Loader";
+import React, { useEffect, useState } from "react";
 
-function App() {
-  const [query, setQuery] = useState("");
-  const [images, setImages] = useState([]);
-  const [page, setPage] = useState(1);
-  const [showLoadMore, setShowLoadMore] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [modalContent, setModalContent] = useState({});
+import SearchBar from "../SearchBar/SearchBar";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
+import Loader from "../Loader/Loader";
+
+import { fetchImages } from "../../services/api";
+import { Photo } from "../../services/api.types";
+import { ModalContent } from "./App.types";
+
+const initialModalContent: ModalContent = {
+  description: "",
+  likes: 0,
+  url: "",
+  user: "",
+  userPhoto: "",
+};
+
+const App: React.FC = () => {
+  const [query, setQuery] = useState<string>("");
+  const [images, setImages] = useState<Photo[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [showLoadMore, setShowLoadMore] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [modalContent, setModalContent] =
+    useState<ModalContent>(initialModalContent);
 
   useEffect(() => {
     if (!query) return;
@@ -41,7 +54,7 @@ function App() {
     fetchData();
   }, [query, page]);
 
-  const handleSearchSubmit = (searchValue) => {
+  const handleSearchSubmit = (searchValue: string): void => {
     setImages([]);
     setPage(1);
     setQuery(searchValue);
@@ -50,16 +63,16 @@ function App() {
     setIsEmpty(false);
   };
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     setPage((prev) => prev + 1);
   };
 
-  const closeModal = () => {
-    setModalContent({});
+  const closeModal = (): void => {
+    setModalContent(initialModalContent);
     setIsOpenModal(false);
   };
 
-  const openModal = (content) => {
+  const openModal = (content: ModalContent): void => {
     setModalContent(content);
     setIsOpenModal(true);
   };
@@ -85,6 +98,6 @@ function App() {
       />
     </>
   );
-}
+};
 
 export default App;

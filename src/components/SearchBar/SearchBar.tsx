@@ -1,12 +1,17 @@
 import toast, { Toaster } from "react-hot-toast";
 import { HiOutlineSearch } from "react-icons/hi";
 import s from "./SearchBar.module.css";
+import React, { FormEvent } from "react";
+import { SearchBarProps } from "./SearchBar.types";
 
-const SearchBar = ({ onSearchSubmit }) => {
-  const handleSubmit = (e) => {
+const SearchBar: React.FC<SearchBarProps> = ({ onSearchSubmit }) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.target;
-    const value = form.elements.search.value.trim();
+
+    const form = e.currentTarget;
+    const searchInput = form.elements.namedItem("search") as HTMLInputElement;
+    const value = searchInput.value.trim();
+
     if (value === "") {
       return toast.error("Please enter a search term to find images.", {
         duration: 1500,
